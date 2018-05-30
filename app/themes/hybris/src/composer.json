@@ -1,0 +1,13 @@
+{
+    "name": "gregorwebmaster/hybris",
+    "description": "HYBRIS - Moderne Wordpress theme",
+    "type": "template",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gregorwebmaster",
+            "email": "git@gregorwebmaster.com"
+        }
+    ],
+    "require": {}
+}
