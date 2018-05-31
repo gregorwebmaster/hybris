@@ -9,5 +9,19 @@
             "email": "git@gregorwebmaster.com"
         }
     ],
-    "require": {}
+    
+    "autoload": {
+        "psr-4": {
+            "Hybris\\": "",
+            "Hybris\\Templates\\": "Templates",
+            "Hybris\\Options\\": "Options"
+        }
+    },
+
+    "require": {},
+
+    "require-dev": {
+        "apigen/apigen": "^4.1",
+        "phpunit/phpunit": "^7.1"
+    }
 }
