@@ -9,7 +9,7 @@
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false"
-        syntaxCheck="true"
+        syntaxCheck="false"
         >
     <testsuites>
         <testsuite name="Hybris Test Suite">
