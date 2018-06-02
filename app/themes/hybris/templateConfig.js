@@ -20,12 +20,12 @@ module.exports = {
         let output = __dirname + '/../../../themes/' + template ;
         return [
             {
-                from: './app/themes/'+template+'/js_img/',
-                to: output + '/images/'
-            },
-            {
                 from: './app/themes/'+template+'/src/',
-                to: output + '/'
+                to: output + '/',
+                ignore: [
+                    '*Test.php',
+                    'composer.*'
+                ]
             }
         ]
 

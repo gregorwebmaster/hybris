@@ -9,8 +9,6 @@ production ? console.log("Enable production mode.") : null;
 
 let templates = ["hybris"];
 
-let templates = ['hybris'];
-
 module.exports = templates.map(template => {
 	let templateConfig = require("./app/themes/" +
 		template +
