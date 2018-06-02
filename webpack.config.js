@@ -8,7 +8,7 @@ let production = (process.env.NODE_ENV === 'production') ? true : false;
 
 production ? console.log('Enable production mode.') : null;
 
-let templates = ['test-theme'];
+let templates = ['hybris'];
 
 module.exports = templates.map(template => {
 

@@ -24,7 +24,7 @@ module.exports = {
                 to: output + '/images/'
             },
             {
-                from: './app/themes/'+template+'/templates/',
+                from: './app/themes/'+template+'/src/',
                 to: output + '/'
             }
         ]
