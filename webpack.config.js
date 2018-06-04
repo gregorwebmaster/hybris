@@ -1,23 +1,35 @@
 let webpack = require("webpack");
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
-let LiveReloadPlugin = require("webpack-livereload-plugin");
+//let LiveReloadPlugin = require("webpack-livereload-plugin");
 let CopyWebpackPlugin = require("copy-webpack-plugin");
+let shell = require("shelljs");
 
 let production = process.env.NODE_ENV === "production" ? true : false;
 
 production ? console.log("Enable production mode.") : null;
 
-let templates = ["hybris"];
+let templates = [
+	{
+		component: "themes",
+		module: "hybris",
+		composer: true
+	}
+];
 
 module.exports = templates.map(template => {
-	let templateConfig = require("./app/themes/" +
-		template +
-		"/templateConfig.js");
+	let templateConfig = require("./app/" + template.component + "/" + template.module + "/templateConfig.js");
+
+	if (template.composer && shell.cd("./app/" + template.component + "/" + template.module + "/src") && shell.exec('composer install').code !== 0) {
+		shell.echo('Error: Can not install composer');
+		shell.exit(1);
+	}
+	
+	shell.cd("../../../..");
 
 	let templateModules = {
-		entry: templateConfig.entryLoader(template),
+		entry: templateConfig.entryLoader(template.module),
 
-		output: templateConfig.outputLoader(template, production),
+		output: templateConfig.outputLoader(template.module, production),
 
 		module: {
 			rules: [
@@ -75,7 +87,7 @@ module.exports = templates.map(template => {
 					options: {
 						name: "../images/[name].[ext]"
 					},
-					include: [__dirname + "/app/themes/" + template + "/images"]
+					include: [__dirname + "./app/" + template.component + "/" + template.module + "/images"]
 				},
 
 				{
@@ -84,7 +96,7 @@ module.exports = templates.map(template => {
 					options: {
 						name: "../fonts/[name].[ext]"
 					},
-					include: [__dirname + "/app/themes/" + template + "/fonts"]
+					include: [__dirname + "./app/" + template.component + "/" + template.module + "/fonts"]
 				},
 
 				{
@@ -103,7 +115,7 @@ module.exports = templates.map(template => {
 				moment: "moment",
 				Ps: "perfect-scrollbar"
 			}),
-			new CopyWebpackPlugin(templateConfig.copyPluginLoader(template))
+			new CopyWebpackPlugin(templateConfig.copyPluginLoader(template.module))
 		]
 	};
 
@@ -121,15 +133,16 @@ module.exports = templates.map(template => {
 				comments: false
 			})
 		);
-	} else {
-		templateModules.plugins.push(
-			new LiveReloadPlugin({
-				protocol: "http",
-				hostname: "localhost",
-				appendScriptTag: true
-			})
-		);
 	}
+	//  else {
+	// 	templateModules.plugins.push(
+	// 		new LiveReloadPlugin({
+	// 			protocol: "http",
+	// 			hostname: "localhost",
+	// 			appendScriptTag: true
+	// 		})
+	// 	);
+	// }
 
 	return templateModules;
 });
