@@ -1,29 +1,15 @@
 
 //Font-awesome
-
-$fa-font-path: "../../../resources/assets/font-awesome/fonts" !default;
-
-@import "../../../resources/assets/font-awesome/scss/variables";
-@import "../../../resources/assets/font-awesome/scss/mixins";
-@import "../../../resources/assets/font-awesome/scss/path";
-@import "../../../resources/assets/font-awesome/scss/core";
-@import "../../../resources/assets/font-awesome/scss/larger";
-@import "../../../resources/assets/font-awesome/scss/fixed-width";
-//@import "../../../resources/assets/font-awesome/scss/list";
-@import "../../../resources/assets/font-awesome/scss/bordered-pulled";
-@import "../../../resources/assets/font-awesome/scss/animated";
-@import "../../../resources/assets/font-awesome/scss/rotated-flipped";
-@import "../../../resources/assets/font-awesome/scss/stacked";
-@import "../../../resources/assets/font-awesome/scss/icons";
-@import "../../../resources/assets/font-awesome/scss/screen-reader";
-
+$fa-font-path: "./../../../../node_modules/@fortawesome/fontawesome-free-webfonts/webfonts" !default;
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular";
 
 //et-line fonts
 
 //$et-line-path: "../../assets/et-line" !default;
 //
 //@import "../../assets/et-line/et-line";
-
+// 
 
 // Load custom Foundation variables
 @import "foundation-settings";

@@ -17,13 +17,23 @@ let templates = [
 ];
 
 module.exports = templates.map(template => {
-	let templateConfig = require("./app/" + template.component + "/" + template.module + "/templateConfig.js");
+	let templateConfig = require("./app/" +
+		template.component +
+		"/" +
+		template.module +
+		"/templateConfig.js");
 
-	if (template.composer && shell.cd("./app/" + template.component + "/" + template.module + "/src") && shell.exec('composer install').code !== 0) {
-		shell.echo('Error: Can not install composer');
+	if (
+		template.composer &&
+		shell.cd(
+			"./app/" + template.component + "/" + template.module + "/src"
+		) &&
+		shell.exec("composer install").code !== 0
+	) {
+		shell.echo("Error: Can not install composer");
 		shell.exit(1);
 	}
-	
+
 	shell.cd("../../../..");
 
 	let templateModules = {
@@ -56,6 +66,8 @@ module.exports = templates.map(template => {
 										__dirname +
 											"./node_modules/foundation-sites/scss",
 										__dirname +
+											"./node_modules/@fortawesome/fontawesome-free-webfonts",
+										__dirname +
 											"/app/themes/" +
 											template +
 											"/images"
@@ -87,7 +99,14 @@ module.exports = templates.map(template => {
 					options: {
 						name: "../images/[name].[ext]"
 					},
-					include: [__dirname + "./app/" + template.component + "/" + template.module + "/images"]
+					include: [
+						__dirname +
+							"./app/" +
+							template.component +
+							"/" +
+							template.module +
+							"/images"
+					]
 				},
 
 				{
@@ -96,7 +115,16 @@ module.exports = templates.map(template => {
 					options: {
 						name: "../fonts/[name].[ext]"
 					},
-					include: [__dirname + "./app/" + template.component + "/" + template.module + "/fonts"]
+					include: [
+						__dirname +
+							"/app/" +
+							template.component +
+							"/" +
+							template.module +
+							"/fonts",
+						__dirname +
+							"/node_modules/@fortawesome/fontawesome-free-webfonts"
+					]
 				},
 
 				{
@@ -115,7 +143,9 @@ module.exports = templates.map(template => {
 				moment: "moment",
 				Ps: "perfect-scrollbar"
 			}),
-			new CopyWebpackPlugin(templateConfig.copyPluginLoader(template.module))
+			new CopyWebpackPlugin(
+				templateConfig.copyPluginLoader(template.module)
+			)
 		]
 	};
 
