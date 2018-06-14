@@ -24,7 +24,8 @@ module.exports = {
                 to: output + '/',
                 ignore: [
                     '*Test.php',
-                    'composer.*'
+                    'composer.*',
+                    '.gitkeep'
                 ]
             }
         ]
