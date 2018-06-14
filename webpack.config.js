@@ -1,6 +1,6 @@
 let webpack = require("webpack");
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
-//let LiveReloadPlugin = require("webpack-livereload-plugin");
+let LiveReloadPlugin = require("webpack-livereload-plugin");
 let CopyWebpackPlugin = require("copy-webpack-plugin");
 let shell = require("shelljs");
 var path = require('path');
@@ -146,15 +146,14 @@ module.exports = templates.map(template => {
             })
         );
     }
-    //  else {
-    // 	templateModules.plugins.push(
-    // 		new LiveReloadPlugin({
-    // 			protocol: "http",
-    // 			hostname: "localhost",
-    // 			appendScriptTag: true
-    // 		})
-    // 	);
-    // }
+     else {
+    	templateModules.plugins.push(
+    		new LiveReloadPlugin({
+    			protocol: "http",
+    			appendScriptTag: false
+    		})
+    	);
+    }
 
     return templateModules;
 });
