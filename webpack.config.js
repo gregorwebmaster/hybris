@@ -150,7 +150,6 @@ module.exports = templates.map(template => {
     	templateModules.plugins.push(
     		new LiveReloadPlugin({
     			protocol: "http",
-    			hostname: "localhost",
     			appendScriptTag: false
     		})
     	);

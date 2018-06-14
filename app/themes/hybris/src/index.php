@@ -11,4 +11,6 @@
 	Hello, it's test theme
 </h1>
 
+<p>We are testing livereloas now.</p>
+
 <?php get_footer();
