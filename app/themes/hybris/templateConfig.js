@@ -1,26 +1,27 @@
 module.exports = {
 
-    entryLoader (template) {
+    entryLoader (component) {
         return {
             main: [
-                './app/themes/' + template + '/js/main.js',
-                './app/themes/' + template + '/scss/main.scss'
+                './app/'+ component.type + '/' + component.name + '/js/main.js',
+                './app/'+ component.type + '/' + component.name + '/scss/main.scss'
             ]
         };
     },
 
-    outputLoader (template) {
+    outputLoader (component, production) {
+        dest = production ? 'diest/' : 'wp-core/wp-content/';
         return {
-            path: __dirname + '/../../../themes/' + template + '/assets/',
+            path: __dirname + '/../../../dist/' + component.type + "/" + component.name + '/assets/',
             filename: '[name].js'
         };
     },
 
-     copyPluginLoader (template) {
-        let output = __dirname + '/../../../themes/' + template ;
+     copyPluginLoader (component) {
+        let output = __dirname + '/../../../themes/' + component ;
         return [
             {
-                from: './app/themes/'+template+'/src/',
+                from: './app/' + component.type + '/' + component.name + '/src/',
                 to: output + '/',
                 ignore: [
                     '*Test.php',

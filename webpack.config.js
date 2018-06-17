@@ -9,26 +9,24 @@ let production = process.env.NODE_ENV === "production" ? true : false;
 
 production ? console.log("Enable production mode.") : null;
 
-let templates = [{
-    component: "themes",
-    module: "hybris",
+let components = [{
+    type: "themes",
+    name: "hybris",
     composer: true
 }];
 
-module.exports = templates.map(template => {
-    let templateConfig = require("./app/" + template.component + "/" + template.module + "/templateConfig.js");
+module.exports = components.map(component => {
+    let templateConfig = require("./app/" + component.type + "/" + component.name + "/templateConfig.js");
 
-    if (template.composer && shell.cd("./app/" + template.component + "/" + template.module + "/src") && shell.exec("composer install").code !== 0) {
+    if (component.composer && shell.cd("./app/" + component.type + "/" + component.name + "/src") && shell.exec("composer install").code !== 0) {
         shell.echo("Error: Can not install composer");
         shell.exit(1);
     }
-
-    shell.cd("../../../..");
-
+    
     let templateModules = {
-        entry: templateConfig.entryLoader(template.module),
+        entry: templateConfig.entryLoader(component),
 
-        output: templateConfig.outputLoader(template.module, production),
+        output: templateConfig.outputLoader(component, production),
 
         module: {
             rules: [{
@@ -93,7 +91,7 @@ module.exports = templates.map(template => {
                         name: "../images/[name].[ext]"
                     },
                     include: [
-                        __dirname + "./app/" + template.component + "/" + template.module + "/images"
+                        __dirname + "./app/" + component.type + "/" + component.name + "/images"
                     ]
                 },
 
@@ -104,7 +102,7 @@ module.exports = templates.map(template => {
                         name: "../fonts/[name].[ext]"
                     },
                     include: [
-                        __dirname + "/app/" + template.component + "/" + template.module + "/fonts",
+                        __dirname + "/app/" + component.type + "/" + component.name + "/fonts",
                         __dirname + "/node_modules/@fortawesome/fontawesome-free-webfonts"
                     ]
                 },
@@ -126,7 +124,7 @@ module.exports = templates.map(template => {
                 Ps: "perfect-scrollbar"
             }),
             new CopyWebpackPlugin(
-                templateConfig.copyPluginLoader(template.module)
+                templateConfig.copyPluginLoader(component)
             )
         ]
     };
