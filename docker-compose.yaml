@@ -19,10 +19,12 @@ services:
     build: ./
     image: hybris
     volumes:
-      - ./themes:/var/www/html/wp-content/themes
+      - ./wp-core:/var/www/html
     networks:
       main:
         ipv4_address: 172.12.1.2
+    ports:
+      - "3000:80"
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_NAME: wordpress
