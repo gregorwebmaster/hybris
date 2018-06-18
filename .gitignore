@@ -1,5 +1,6 @@
 node_modules
+vendor
 .vscode
 .jsbeautifyrc
-/themes
+/dist
 /wp-core
