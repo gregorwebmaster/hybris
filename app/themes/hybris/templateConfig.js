@@ -10,23 +10,24 @@ module.exports = {
     },
 
     outputLoader (component, production) {
-        dest = production ? 'diest/' : 'wp-core/wp-content/';
+        let dest = production ? 'dist/' : 'wp-core/wp-content/';
         return {
-            path: __dirname + '/../../../dist/' + component.type + "/" + component.name + '/assets/',
+            path: __dirname + '/../../../' + dest + "/" + component.type + "/" + component.name + '/assets/',
             filename: '[name].js'
         };
     },
 
-     copyPluginLoader (component) {
-        let output = __dirname + '/../../../themes/' + component ;
+     copyPluginLoader (component, production) {
+        let dest = production ? 'dist/' : 'wp-core/wp-content/';
         return [
             {
                 from: './app/' + component.type + '/' + component.name + '/src/',
-                to: output + '/',
+                to: __dirname + '/../../../' + dest + "/" + component.type + "/" + component.name + "/",
                 ignore: [
                     '*Test.php',
                     'composer.*',
-                    '.gitkeep'
+                    '.gitkeep',
+                    'phpunit.xml'
                 ]
             }
         ]

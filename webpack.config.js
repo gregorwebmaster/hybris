@@ -4,25 +4,23 @@ let LiveReloadPlugin = require("webpack-livereload-plugin");
 let CopyWebpackPlugin = require("copy-webpack-plugin");
 let shell = require("shelljs");
 var path = require('path');
+let components = require('./config/webpack.js');
 
 let production = process.env.NODE_ENV === "production" ? true : false;
-
 production ? console.log("Enable production mode.") : null;
 
-let components = [{
-    type: "themes",
-    name: "hybris",
-    composer: true
-}];
 
 module.exports = components.map(component => {
     let templateConfig = require("./app/" + component.type + "/" + component.name + "/templateConfig.js");
+    let workdir = __dirname;
 
     if (component.composer && shell.cd("./app/" + component.type + "/" + component.name + "/src") && shell.exec("composer install").code !== 0) {
         shell.echo("Error: Can not install composer");
         shell.exit(1);
     }
-    
+
+    shell.cd(workdir);
+
     let templateModules = {
         entry: templateConfig.entryLoader(component),
 
@@ -62,7 +60,7 @@ module.exports = components.map(component => {
                                     includePaths: [
                                         path.resolve(__dirname, "./node_modules/foundation-sites"),
                                         path.resolve(__dirname, "./node_modules/@fortawesome/fontawesome-free-webfonts"),
-                                        __dirname + "/app/themes/" + template + "/images"
+                                        __dirname + "/app/" + component.type + "/" + component.name + "/images"
                                     ]
                                 }
                             }
@@ -124,7 +122,7 @@ module.exports = components.map(component => {
                 Ps: "perfect-scrollbar"
             }),
             new CopyWebpackPlugin(
-                templateConfig.copyPluginLoader(component)
+                templateConfig.copyPluginLoader(component, production)
             )
         ]
     };
